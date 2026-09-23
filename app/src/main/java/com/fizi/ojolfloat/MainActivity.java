@@ -2,6 +2,7 @@ package com.fizi.ojolfloat;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
@@ -11,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+
+    private static final String INDRIVE_PACKAGE =
+            "sinet.startup.inDrver";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,5 +65,20 @@ public class MainActivity extends Activity {
         layout.addView(button, buttonParams);
 
         setContentView(layout);
+
+        button.setOnClickListener(v -> {
+
+            Intent intent = getPackageManager()
+                    .getLaunchIntentForPackage(
+                            INDRIVE_PACKAGE
+                    );
+
+            if (intent != null) {
+                intent.addFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+                );
+                startActivity(intent);
+            }
+        });
     }
 }
